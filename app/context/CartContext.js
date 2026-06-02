@@ -4,19 +4,24 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const raw = localStorage.getItem("cart:v1");
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+    return [];
+  });
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem("cart:v1");
-      if (raw) setCart(JSON.parse(raw));
-    } catch (e) {}
-  }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("cart:v1", JSON.stringify(cart));
-    } catch (e) {}
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("cart:v1", JSON.stringify(cart));
+      } catch (e) {}
+    }
   }, [cart]);
 
   function addToCart(product) {

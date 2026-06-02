@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
@@ -42,6 +42,7 @@ export default function RegisterPage() {
 
       // Redirect to home
       router.push('/');
+      router.refresh();
     } catch (err) {
       setError(err.message || 'Registration failed');
     } finally {
@@ -50,22 +51,23 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md space-y-8 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 px-4">
+      <div className="w-full max-w-md space-y-8 p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl">
         <div>
-          <h2 className="text-center h2 mb-6 font-bold text-3xl text-center text-gray-900">
-            Create an account
+          <h2 className="text-center font-bold text-3xl text-white tracking-tight">
+            Create Account
           </h2>
-          <p className="text-center text-sm text-gray-600">
-            Already have an account? <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <p className="mt-2 text-center text-sm text-slate-300">
+            Already have an account?{' '}
+            <a href="/login" className="font-semibold text-sky-400 hover:text-sky-300 transition">
               Sign in
             </a>
           </p>
         </div>
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name" className="block mb-1 text-sm font-medium text-gray-700">
-              Name
+            <label htmlFor="name" className="block mb-1.5 text-sm font-medium text-slate-200">
+              Full Name
             </label>
             <input
               id="name"
@@ -73,14 +75,15 @@ export default function RegisterPage() {
               name="name"
               autoComplete="name"
               required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus-indigo-600 sm:text-sm sm:leading-6"
+              className="w-full rounded-2xl border-none bg-white/5 px-4 py-3 text-white placeholder-slate-400 shadow-inner ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm"
+              placeholder="John Doe"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block mb-1.5 text-sm font-medium text-slate-200">
               Email address
             </label>
             <input
@@ -89,14 +92,15 @@ export default function RegisterPage() {
               name="email"
               autoComplete="email"
               required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus-indigo-600 sm:text-sm sm:leading-6"
+              className="w-full rounded-2xl border-none bg-white/5 px-4 py-3 text-white placeholder-slate-400 shadow-inner ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm"
+              placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block mb-1 text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block mb-1.5 text-sm font-medium text-slate-200">
               Password
             </label>
             <input
@@ -105,14 +109,15 @@ export default function RegisterPage() {
               name="password"
               autoComplete="new-password"
               required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus-indigo-600 sm:text-sm sm:leading-6"
+              className="w-full rounded-2xl border-none bg-white/5 px-4 py-3 text-white placeholder-slate-400 shadow-inner ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm"
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
           <div>
-            <label htmlFor="confirm-password" className="block mb-1 text-sm font-medium text-gray-700">
+            <label htmlFor="confirm-password" className="block mb-1.5 text-sm font-medium text-slate-200">
               Confirm Password
             </label>
             <input
@@ -121,30 +126,31 @@ export default function RegisterPage() {
               name="confirm-password"
               autoComplete="new-password"
               required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus-indigo-600 sm:text-sm sm:leading-6"
+              className="w-full rounded-2xl border-none bg-white/5 px-4 py-3 text-white placeholder-slate-400 shadow-inner ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm"
+              placeholder="••••••••"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
 
-          <div>
+          <div className="pt-2">
             <button
               type="submit"
               disabled={loading}
-              className="group w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-2xl shadow-lg text-white bg-sky-600 hover:bg-sky-500 active:bg-sky-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Registering...' : 'Create account'}
+              {loading ? 'Creating account...' : 'Create account'}
             </button>
           </div>
         </form>
 
         {error && (
-          <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-600">
+          <div className="mt-4 p-3 bg-rose-500/10 border border-rose-500/20 rounded-2xl text-sm text-rose-300">
             {error}
           </div>
         )}
 
-        <p className="text-center text-sm text-gray-500">
+        <p className="text-center text-xs text-slate-400">
           By clicking Create account, you agree to our Terms of Service and Privacy Policy.
         </p>
       </div>
